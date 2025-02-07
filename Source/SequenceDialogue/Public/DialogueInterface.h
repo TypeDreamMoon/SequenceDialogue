@@ -16,9 +16,8 @@ class SEQUENCEDIALOGUE_API UDialogueInterface : public UInterface
 class IDialogueInterface
 {
 	GENERATED_BODY()
+
 public:
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Dialogue", DisplayName = "ShowDialogueInfo", meta = (CallInEditor = "true"))
-	void ShowDialogueInfo(bool show,const FText& name,const FText& info) const;
+	void ShowDialogueInfo(bool show, const FText& name, const FText& info) const;
 };
-
-

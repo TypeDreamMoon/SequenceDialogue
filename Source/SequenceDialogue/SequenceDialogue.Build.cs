@@ -42,6 +42,7 @@ public class SequenceDialogue : ModuleRules
 				"SlateCore",
                 "MovieScene",
                 "UMG",
+                "DeveloperSettings"
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);
@@ -50,6 +51,7 @@ public class SequenceDialogue : ModuleRules
         {
             PrivateDependencyModuleNames.Add("UnrealEd");
             PrivateDependencyModuleNames.Add("EditorStyle");
+            PrivateDependencyModuleNames.Add("Settings");
         }
 
         DynamicallyLoadedModuleNames.AddRange(

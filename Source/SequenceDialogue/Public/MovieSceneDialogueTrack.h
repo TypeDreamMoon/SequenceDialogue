@@ -19,17 +19,14 @@ class UMovieSceneDialogueTrack : public UMovieSceneNameableTrack, public IMovieS
 	GENERATED_BODY()
 
 public:
-
 	static uint16 GetEvaluationPriority() { return UMovieSceneSpawnTrack::GetEvaluationPriority() + 120; }
 
 	/** UMovieSceneTrack interface */
-	//virtual void PostCompile(FMovieSceneEvaluationTrack& Track, const FMovieSceneTrackCompilerArgs& Args) const override;
 	virtual bool IsEmpty() const override;
 	virtual void AddSection(UMovieSceneSection& Section) override;
-	virtual void RemoveSection( UMovieSceneSection& Section ) override;
+	virtual void RemoveSection(UMovieSceneSection& Section) override;
 	virtual UMovieSceneSection* CreateNewSection() override;
 	virtual const TArray<UMovieSceneSection*>& GetAllSections() const override;
-	//virtual TRange<float> GetSectionBoundaries() const override;
 	virtual FMovieSceneEvalTemplatePtr CreateTemplateForSection(const UMovieSceneSection& InSection) const override;
 	virtual bool HasSection(const UMovieSceneSection& Section) const override;
 	virtual bool SupportsMultipleRows() const override { return true; }
@@ -39,8 +36,8 @@ public:
 
 public:
 	SEQUENCEDIALOGUE_API UMovieSceneDialogueSection* GetSectionByID(int id);
-private:
 
+private:
 	UPROPERTY()
 	TArray<UMovieSceneSection*> Sections;
 };

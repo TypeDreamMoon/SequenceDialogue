@@ -13,6 +13,7 @@
 
 #include "Widgets/SOverlay.h"
 #include "DialogueWidget.h"
+#include "SequenceDialogueSettings.h"
 #include "UObject/ConstructorHelpers.h"
 
 #if WITH_EDITOR
@@ -26,8 +27,9 @@
 
 struct FDialogueSharedTrackData : IPersistentEvaluationData
 {
-	FDialogueSharedTrackData():bNeedExecute(false)
-	{}
+	FDialogueSharedTrackData(): bNeedExecute(false)
+	{
+	}
 
 	~FDialogueSharedTrackData()
 	{
@@ -38,7 +40,7 @@ struct FDialogueSharedTrackData : IPersistentEvaluationData
 		return bNeedExecute;
 	}
 
-	void SetInfo(bool show,const FText& info, const FText& name)
+	void SetInfo(bool show, const FText& info, const FText& name)
 	{
 		bShow = show;
 		DialogueInfo = info;
@@ -80,7 +82,7 @@ struct FDialogueSharedTrackData : IPersistentEvaluationData
 						{
 							SceneViewport = EditorViewport;
 						}
-						
+
 						if (SceneViewport)
 						{
 							if (SceneViewport->GetViewportWidget().IsValid())
@@ -128,7 +130,6 @@ struct FDialogueSharedTrackData : IPersistentEvaluationData
 		else
 #endif
 		{
-
 			if (GEngine && GEngine->GameViewport)
 			{
 				if (bShow)
@@ -139,7 +140,7 @@ struct FDialogueSharedTrackData : IPersistentEvaluationData
 						//WBP_DialogueWidget->AddToViewport();
 						GEngine->GameViewport->AddViewportWidgetContent(WBP_DialogueWidget->TakeWidget());
 					}
-			
+
 					if (WBP_DialogueWidget)
 					{
 						FText Delimiter = FText::FromString(TEXT(":"));
@@ -154,7 +155,7 @@ struct FDialogueSharedTrackData : IPersistentEvaluationData
 						//WBP_DialogueWidget->RemoveFromViewport();
 						GEngine->GameViewport->RemoveViewportWidgetContent(WBP_DialogueWidget->TakeWidget());
 					}
-					
+
 					if (WBP_DialogueWidget)
 					{
 						WBP_DialogueWidget = nullptr;
@@ -166,13 +167,13 @@ struct FDialogueSharedTrackData : IPersistentEvaluationData
 
 	UDialogueWidget* CreateDialogueWidget(UWorld* OwningObject)
 	{
-		UClass* DialogueWidgetClass = StaticLoadClass(UDialogueWidget::StaticClass(), nullptr, TEXT("/SequenceDialogue/WBP_Dialogue.WBP_Dialogue_C"));
-		if (!DialogueWidgetClass || !OwningObject)
+		TSubclassOf<UDialogueWidget> WidgetClass = USequenceDialogueSettings::Get()->GetDialogueWidgetClass();
+		if (!WidgetClass || !OwningObject)
 		{
 			return nullptr;
 		}
 
-		return CreateWidget<UDialogueWidget>(OwningObject, DialogueWidgetClass);
+		return CreateWidget<UDialogueWidget>(OwningObject, WidgetClass);
 	}
 
 private:
@@ -215,7 +216,6 @@ struct FDialogueExecutionToken : IMovieSceneSharedExecutionToken
 					TrackData->Apply(Player);
 				}
 			}
-			
 		}
 	}
 
@@ -231,7 +231,7 @@ public:
 };
 
 FMovieSceneDialogueSectionTemplate::FMovieSceneDialogueSectionTemplate(const UMovieSceneDialogueSection& Section)
-	: DialogueInfo(Section.GetDialogueInfo()),SpeakerName(Section.GetDialogueSpeakerName())
+	: DialogueInfo(Section.GetDialogueInfo()), SpeakerName(Section.GetDialogueSpeakerName())
 {
 }
 
@@ -260,7 +260,7 @@ void FMovieSceneDialogueSectionTemplate::Evaluate(const FMovieSceneEvaluationOpe
 void FMovieSceneDialogueSectionTemplate::Setup(FPersistentEvaluationData& PersistentData, IMovieScenePlayer& Player) const
 {
 	FDialogueSharedTrackData& TrackData = PersistentData.GetOrAdd<FDialogueSharedTrackData>(FMovieSceneDialogueSharedTrack::GetSharedDataKey());
-	TrackData.SetInfo(true, DialogueInfo,SpeakerName);
+	TrackData.SetInfo(true, DialogueInfo, SpeakerName);
 }
 
 void FMovieSceneDialogueSectionTemplate::TearDown(FPersistentEvaluationData& PersistentData, IMovieScenePlayer& Player) const
@@ -278,26 +278,26 @@ FSharedPersistentDataKey FMovieSceneDialogueSharedTrack::GetSharedDataKey()
 
 void FMovieSceneDialogueSharedTrack::TearDown(FPersistentEvaluationData& PersistentData, IMovieScenePlayer& Player) const
 {
-/*
-	FDialogueSharedTrackData* TrackData = PersistentData.Find<FDialogueSharedTrackData>(GetSharedDataKey());
-	if (TrackData)
-	{
-		FText noused;
-		TrackData->SetInfo(false, noused,noused);
-		TrackData->Apply(Player);
-
-		PersistentData.Reset(GetSharedDataKey());
-	}
-*/
+	/*
+		FDialogueSharedTrackData* TrackData = PersistentData.Find<FDialogueSharedTrackData>(GetSharedDataKey());
+		if (TrackData)
+		{
+			FText noused;
+			TrackData->SetInfo(false, noused,noused);
+			TrackData->Apply(Player);
+	
+			PersistentData.Reset(GetSharedDataKey());
+		}
+	*/
 }
 
 void FMovieSceneDialogueSharedTrack::Evaluate(const FMovieSceneEvaluationOperand& Operand, const FMovieSceneContext& Context, const FPersistentEvaluationData& PersistentData, FMovieSceneExecutionTokens& ExecutionTokens) const
 {
-/*
-	const FDialogueSharedTrackData* TrackData = PersistentData.Find<FDialogueSharedTrackData>(GetSharedDataKey());
-	if (TrackData && TrackData->HasAnythingToDo())
-	{
-		ExecutionTokens.Add(FDialogueExecutionToken());
-	}
-*/
+	/*
+		const FDialogueSharedTrackData* TrackData = PersistentData.Find<FDialogueSharedTrackData>(GetSharedDataKey());
+		if (TrackData && TrackData->HasAnythingToDo())
+		{
+			ExecutionTokens.Add(FDialogueExecutionToken());
+		}
+	*/
 }

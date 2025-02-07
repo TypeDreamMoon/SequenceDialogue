@@ -5,20 +5,12 @@
 
 bool UDialogueWidget::SetDialogueInfo(const FText& InText)
 {
-	if (UTextBlock* DialogueInfoTextBlock = Cast<UTextBlock>(GetWidgetFromName(TEXT("TB_DialogueInfo"))))
-	{
-		DialogueInfoTextBlock->SetText(InText);
-		return true;
-	}
-	return false;
+	BP_SetDialogueContent(InText);
+	return true;
 }
 
 bool UDialogueWidget::SetSpeakerName(const FText& InText)
 {
-	if (UTextBlock* SpeakerNameTextBlock = Cast<UTextBlock>(GetWidgetFromName(TEXT("TB_SpeakerName"))))
-	{
-		SpeakerNameTextBlock->SetText(InText);
-		return true;
-	}
-	return false;
+	BP_SetDialogueSpeakerName(InText);
+	return true;
 }

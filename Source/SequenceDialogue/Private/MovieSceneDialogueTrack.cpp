@@ -9,12 +9,6 @@
 
 #define LOCTEXT_NAMESPACE "MovieSceneDialogueTrack"
 
-//void UMovieSceneDialogueTrack::PostCompile(FMovieSceneEvaluationTrack& OutTrack, const FMovieSceneTrackCompilerArgs& Args) const
-//{
-//	// Set priority to highest possible
-//	OutTrack.SetEvaluationPriority(GetEvaluationPriority());
-//}
-
 FMovieSceneEvalTemplatePtr UMovieSceneDialogueTrack::CreateTemplateForSection(const UMovieSceneSection& InSection) const
 {
 	return FMovieSceneDialogueSectionTemplate(*CastChecked<UMovieSceneDialogueSection>(&InSection)); //UHAMovieSceneSection UMovieSceneBoolSection
@@ -33,7 +27,7 @@ void UMovieSceneDialogueTrack::AddSection(UMovieSceneSection& Section)
 }
 
 
-void UMovieSceneDialogueTrack::RemoveSection( UMovieSceneSection& Section )
+void UMovieSceneDialogueTrack::RemoveSection(UMovieSceneSection& Section)
 {
 	Sections.Remove(&Section);
 }
@@ -46,25 +40,10 @@ UMovieSceneSection* UMovieSceneDialogueTrack::CreateNewSection()
 	return new_section;
 }
 
-
 const TArray<UMovieSceneSection*>& UMovieSceneDialogueTrack::GetAllSections() const
 {
 	return Sections;
 }
-
-
-//TRange<float> UMovieSceneDialogueTrack::GetSectionBoundaries() const
-//{
-//	TArray< TRange<float> > Bounds;
-//
-//	for (int32 SectionIndex = 0; SectionIndex < Sections.Num(); ++SectionIndex)
-//	{
-//		Bounds.Add(Sections[SectionIndex]->GetRange());
-//	}
-//
-//	return TRange<float>::Hull(Bounds);
-//}
-
 
 bool UMovieSceneDialogueTrack::HasSection(const UMovieSceneSection& Section) const
 {

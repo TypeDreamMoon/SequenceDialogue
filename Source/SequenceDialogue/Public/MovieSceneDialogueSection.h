@@ -15,19 +15,13 @@ class UMovieSceneDialogueSection
 {
 	GENERATED_UCLASS_BODY()
 public:
-	FText GetDialogueInfo()const { return dialogueInfo; }
-	void  SetDialogueInfo(const FText& info) { dialogueInfo = info; }
+	FText GetDialogueInfo() const { return dialogueInfo; }
+	void SetDialogueInfo(const FText& info) { dialogueInfo = info; }
 
-	FText GetDialogueSpeakerName()const { return speakerName; }
-	void  SetDialogueSpeakerName(const FText& name) { speakerName = name; }
-public:
+	FText GetDialogueSpeakerName() const { return speakerName; }
+	void SetDialogueSpeakerName(const FText& name) { speakerName = name; }
 
-	//~ UMovieSceneSection interface
-	//virtual FMovieSceneEvalTemplatePtr GenerateTemplate() const override;
-	//virtual TOptional<float> GetKeyTime(FKeyHandle KeyHandle) const override;
-	//virtual void SetKeyTime(FKeyHandle KeyHandle, float Time) override;
 private:
-
 	UPROPERTY(EditAnywhere, Category = Dialogue)
 	FText dialogueInfo;
 
