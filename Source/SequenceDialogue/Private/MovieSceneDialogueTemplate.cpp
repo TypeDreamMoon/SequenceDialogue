@@ -25,6 +25,7 @@
 
 #endif
 
+USTRUCT()
 struct FDialogueSharedTrackData : IPersistentEvaluationData
 {
 	FDialogueSharedTrackData(): bNeedExecute(false)
@@ -185,7 +186,6 @@ private:
 
 #if WITH_EDITOR
 	TWeakPtr<SWidget> ViewportWidget;
-	//TWeakPtr<ILevelViewport> Viewport;
 #endif
 	UPROPERTY()
 	UDialogueWidget* WBP_DialogueWidget = nullptr;
@@ -195,7 +195,6 @@ private:
 struct FDialogueExecutionToken : IMovieSceneSharedExecutionToken
 {
 	virtual void Execute(FPersistentEvaluationData& PersistentData, IMovieScenePlayer& Player) override
-	//virtual void Execute(const FMovieSceneContext& Context, const FMovieSceneEvaluationOperand& Operand, FPersistentEvaluationData& PersistentData, IMovieScenePlayer& Player) override
 	{
 		FDialogueSharedTrackData* TrackData = PersistentData.Find<FDialogueSharedTrackData>(FMovieSceneDialogueSharedTrack::GetSharedDataKey());
 		if (TrackData)
@@ -278,26 +277,8 @@ FSharedPersistentDataKey FMovieSceneDialogueSharedTrack::GetSharedDataKey()
 
 void FMovieSceneDialogueSharedTrack::TearDown(FPersistentEvaluationData& PersistentData, IMovieScenePlayer& Player) const
 {
-	/*
-		FDialogueSharedTrackData* TrackData = PersistentData.Find<FDialogueSharedTrackData>(GetSharedDataKey());
-		if (TrackData)
-		{
-			FText noused;
-			TrackData->SetInfo(false, noused,noused);
-			TrackData->Apply(Player);
-	
-			PersistentData.Reset(GetSharedDataKey());
-		}
-	*/
 }
 
 void FMovieSceneDialogueSharedTrack::Evaluate(const FMovieSceneEvaluationOperand& Operand, const FMovieSceneContext& Context, const FPersistentEvaluationData& PersistentData, FMovieSceneExecutionTokens& ExecutionTokens) const
 {
-	/*
-		const FDialogueSharedTrackData* TrackData = PersistentData.Find<FDialogueSharedTrackData>(GetSharedDataKey());
-		if (TrackData && TrackData->HasAnythingToDo())
-		{
-			ExecutionTokens.Add(FDialogueExecutionToken());
-		}
-	*/
 }

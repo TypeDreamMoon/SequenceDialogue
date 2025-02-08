@@ -2,9 +2,6 @@
 
 #include "MovieSceneDialogueTrack.h"
 #include "MovieSceneDialogueSection.h"
-#include "Compilation/IMovieSceneTemplateGenerator.h"
-#include "Evaluation/PersistentEvaluationData.h"
-#include "Evaluation/MovieSceneEvaluationTrack.h"
 #include "MovieSceneDialogueTemplate.h"
 
 #define LOCTEXT_NAMESPACE "MovieSceneDialogueTrack"
